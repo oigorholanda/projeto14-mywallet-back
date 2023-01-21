@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteRegistry, listRegistries, newRegistry } from "../controller/registries.js";
+import { deleteRegistry, listRegistries, newRegistry } from "../controller/registriesController.js";
 
 const registryRouter = Router()
 

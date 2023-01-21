@@ -1,4 +1,3 @@
-import joi from "joi";
 import bcrypt from "bcrypt";
 import { v4 as uuidV4 } from "uuid";
 import db from "../config/database.js";
@@ -8,7 +7,9 @@ import db from "../config/database.js";
 //Cadastrar usuario
 export async function signUp(req, res) {
     // pegar os dados do body
-    // fazer as validaçoes
+    const data = req.body
+    console.log(data);
+    
     // cryptar a senha
 
     // try {
@@ -21,8 +22,8 @@ export async function signUp(req, res) {
 }
 
 //Verificar e logar user
-export async function signIn(req, res) {
-   return res.status(201).send("Requisição completa no /sign-in")
+export async function login(req, res) {
+   return res.status(201).send("Requisição completa no /login")
 }
 
 

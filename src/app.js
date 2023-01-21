@@ -11,8 +11,9 @@ app.use(express.json());
 dotenv.config();
 
 // rotas
-app.use(registryRouter);
 app.use(authRouter);
+app.use(registryRouter);
+
 
 
 // porta e listen

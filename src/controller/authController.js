@@ -51,7 +51,7 @@ export async function login(req, res) {
 
 export async function allDoc(req, res) {
   try {
-    const data = await db.collection("users").find().toArray()
+    const data = await db.collection("sessions").find().toArray()
     res.send(data)
   } catch (error) {
     res.status(500).send(error.message);

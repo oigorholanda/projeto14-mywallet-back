@@ -4,9 +4,10 @@ import { validateToken } from "../middleware/authMiddleware.js";
 
 const registryRouter = Router()
 
-registryRouter.get("/registries", validateToken, listRegistries)
-registryRouter.post("/registries", validateToken, newRegistry)
+registryRouter.use(validateToken)
+registryRouter.get("/registries", listRegistries)
+registryRouter.post("/registries/:type", newRegistry)
 
-registryRouter.delete("/registries", validateToken, deleteRegistry)
+registryRouter.delete("/registries", deleteRegistry)
 
 export default registryRouter

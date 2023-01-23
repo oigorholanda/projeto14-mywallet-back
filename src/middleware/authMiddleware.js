@@ -2,7 +2,7 @@ import db from "../config/database.js";
 
 
 export async function validateToken(req, res, next) {
-  const { authorization } = req.header;
+  const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
 
   if (!token) return res.status(401).send("Informe o Token!");
@@ -12,7 +12,7 @@ export async function validateToken(req, res, next) {
 
     if (!session) return res.status(401).send("Você não tem autorização para esta ação");
 
-    res.locals.sessao = session
+    res.locals.authId = session.userId
 
     next()
 

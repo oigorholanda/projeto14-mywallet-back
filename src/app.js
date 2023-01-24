@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import registryRouter from "./routes/registryRoutes.js";
-import authRouter from "./routes/authRoutes.js";
+import registryRouter from "./routes/registry.routes.js";
+import authRouter from "./routes/auth.routes.js";
 
 //servidor
 const app = express();
@@ -13,7 +13,6 @@ dotenv.config();
 // rotas
 app.use(authRouter);
 app.use(registryRouter);
-
 
 
 // porta e listen

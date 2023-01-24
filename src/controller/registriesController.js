@@ -3,23 +3,10 @@ import dayjs from "dayjs";
 
 //Cadastrar nova entrada e ou saida
 export async function newRegistry(req, res) {
-  const { description, value } = req.body;
-  const { type } = req.params;
-  const authId = res.locals.userId
-
+  const registry = res.locals.registries;
 
   try {
-    const user = await db.collection("users").findOne({ _id: authId });
-    
-    const registry = {
-      userId: user._id,
-      description,
-      value,
-      type,
-      date: dayjs().format("DD/MM")
-  }
-
-    await db.collection("registry").insertOne(registry);
+    await db.collection("registries").insertOne(registry);
 
     return res.sendStatus(201);
   } catch (error) {
@@ -28,22 +15,18 @@ export async function newRegistry(req, res) {
   }
 }
 
-
 //Pegar todos os registros
 export async function listRegistries(req, res) {
-  const authId = res.locals.userId
+  const user = res.locals.user;
 
   try {
-    const registries = await db.collection("registry").find({ user_id: authId }).toArray();
-    return res.send(registries);
+    const registries = await db.collection("registries").find({ user: user._id  }).toArray();
+    return res.send({ registries, user });
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
   }
 }
 
-
 //apagar um registro
-export async function deleteRegistry(req, res) {
-  
-}
+export async function deleteRegistry(req, res) {}

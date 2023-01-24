@@ -1,6 +1,5 @@
 import db from "../config/database.js";
 
-
 export async function validateToken(req, res, next) {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
@@ -10,14 +9,17 @@ export async function validateToken(req, res, next) {
   try {
     const session = await db.collection("sessions").findOne({ token });
 
-    if (!session) return res.status(401).send("Você não tem autorização para esta ação");
+    if (!session)
+      return res.status(401).send("Você não tem autorização para esta ação");
 
-    res.locals.authId = session.userId
+    const user = await db.collection("users").findOne({ _id: session.userId });
 
-    next()
+    delete user.password;
 
+    res.locals.user = user;
   } catch (error) {
-    res.status(500).send(error.message)
+    return res.status(500).send(error.message);
   }
 
+  next();
 }

@@ -35,11 +35,12 @@ export async function login(req, res) {
   try {
     const user = await db.collection("users").findOne({ email });
 
+
     if (user && bcrypt.compareSync(password, user.password)) {
 
       await db.collection("sessions").insertOne({ userId: user._id, token})
-
-      res.status(200).send(`Autenticação realizada com sucesso!\n${token}`);
+      delete user.password
+      res.status(200).send({token, user});
     } else {
       res.status(401).send("Email ou senha incorretos");
     }
@@ -51,7 +52,7 @@ export async function login(req, res) {
 
 export async function allDoc(req, res) {
   try {
-    const data = await db.collection("sessions").find().toArray()
+    const data = await db.collection("registries").find().toArray()
     res.send(data)
   } catch (error) {
     res.status(500).send(error.message);
